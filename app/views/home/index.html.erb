@@ -1,0 +1,13 @@
+<h1>URL Minitizer</h1>
+<p>Shortening all your favorite long URLs.</p>
+
+<%= form_with scope: :url, url: urls_path, local: true do |form| %>
+  <p>
+    <%= form.label :text %><br>
+    <%= form.text_field :text %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

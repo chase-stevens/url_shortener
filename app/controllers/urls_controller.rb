@@ -26,7 +26,8 @@ class UrlsController < ApplicationController
         @url.id = @url.hashed_num
         break
       elsif bucket.text == @url.text
-        redirect_to bucket.text and return
+        flash[:notice] = "URL already exists"
+        redirect_to bucket and return
       else
         @url.hashed_num += 1
       end

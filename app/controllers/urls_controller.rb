@@ -18,7 +18,20 @@ class UrlsController < ApplicationController
   def create
     @url = Url.new(url_params)
     @url.hashed_num = hash(@url.text)
-    store(@url)
+
+    bucket = Url.find_by(id: @url.hashed_num)
+
+    while true
+      if !bucket
+        @url.id = @url.hashed_num
+        break
+      elsif bucket.text == @url.text
+        redirect_to bucket.text and return
+      else
+        @url.hashed_num += 1
+      end
+    end
+
     @url.short = @url.id.to_s(36)
     @url.save
     redirect_to @url
@@ -47,12 +60,12 @@ class UrlsController < ApplicationController
       return hash
     end
 
-    def store(url)
+    def check_bucket(url)
       bucket = Url.find_by(id: url.hashed_num)
       if !bucket
         url.id = url.hashed_num
       elsif bucket.text == url.text
-        redirect_to bucket and return
+        redirect_to bucket
       else
         url.hashed_num += 1
         store(url)

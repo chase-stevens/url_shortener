@@ -3,15 +3,16 @@
 
 <table>
   <tr>
-    <th>Title</th>
-    <th>Text</th>
-    <th></th>
+    <th>URL</th>
+    <th>Short</th>
+    <th>ID</th>
   </tr>
 
   <% @urls.each do |url| %>
     <tr>
       <td><%= url.text %></td>
       <td><%= url.short %></td>
+      <td><%= url.id %></td>
     </tr>
   <% end %>
 </table>

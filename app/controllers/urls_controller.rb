@@ -5,6 +5,10 @@ class UrlsController < ApplicationController
 
   def show
     @url = Url.find_by(short: params[:short])
+  end
+
+  def goto
+    @url = Url.find_by(short: params[:short])
     redirect_to @url.text
   end
 
@@ -14,8 +18,8 @@ class UrlsController < ApplicationController
   def create
     @url = Url.new(url_params)
     @url.hashed_num = hash(@url.text)
-    @url.short = @url.hashed_num.to_s(36)
-
+    store(@url)
+    @url.short = @url.id.to_s(36)
     @url.save
     redirect_to @url
   end
@@ -41,6 +45,24 @@ class UrlsController < ApplicationController
       hash = hash % table_size
 
       return hash
+    end
 
+    def store(url)
+      bucket = Url.find_by(id: url.hashed_num)
+      if !bucket
+        url.id = url.hashed_num
+      elsif bucket.text == url.text
+        redirect_to bucket and return
+      else
+        url.hashed_num += 1
+        store(url)
+      end
+
+      # check for collision
+      # if bucket is occupied and it is the url, return the url
+      # else if bucket is occupied and it is not the url, ++id and check for collision
+      # else create url in bucker
+
+      @url.id = @url.hashed_num
     end
 end

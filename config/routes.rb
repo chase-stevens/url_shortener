@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get 'home/index'
-  get '/urlindex', to: 'urls#index'
+  get '/url_index', to: 'urls#index'
   get '/:short', to: 'urls#show'
+  get '/:short/goto', to: 'urls#goto'
 
   resources :urls, param: :short
 

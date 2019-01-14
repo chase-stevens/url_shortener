@@ -1,0 +1,17 @@
+
+<h1>Listing URLs</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Text</th>
+    <th></th>
+  </tr>
+
+  <% @urls.each do |url| %>
+    <tr>
+      <td><%= url.text %></td>
+      <td><%= url.short %></td>
+    </tr>
+  <% end %>
+</table>

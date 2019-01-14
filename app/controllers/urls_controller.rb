@@ -1,7 +1,11 @@
 class UrlsController < ApplicationController
+  def index
+    @urls = Url.all
+  end
 
   def show
-    @url = Url.find(params[:id])
+    @url = Url.find_by(short: params[:short])
+    redirect_to @url.text
   end
 
   def new
@@ -9,7 +13,8 @@ class UrlsController < ApplicationController
 
   def create
     @url = Url.new(url_params)
-    @url.short = hash(@url.text)
+    @url.hashed_num = hash(@url.text)
+    @url.short = @url.hashed_num.to_s(36)
 
     @url.save
     redirect_to @url
@@ -24,7 +29,7 @@ class UrlsController < ApplicationController
       offset_basis = 0x811c9dc5
       prime = 16777619
       mask = 4294967295
-      table_size = 10000
+      table_size = 100000
 
       hash = offset_basis # Offset basis
       item.to_s.each_byte do |byte|

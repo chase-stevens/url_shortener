@@ -17,19 +17,18 @@ class UrlsController < ApplicationController
 
   def create
     @url = Url.new(url_params)
-    @url.hashed_num = hash(@url.text)
+    @url.id = hash(@url.text)
 
-    bucket = Url.find_by(id: @url.hashed_num)
+    bucket = Url.find_by(id: @url.id)
 
     while true
       if !bucket
-        @url.id = @url.hashed_num
         break
       elsif bucket.text == @url.text
         flash[:notice] = "URL already exists"
         redirect_to bucket and return
       else
-        @url.hashed_num += 1
+        @url.id += 1
       end
     end
 

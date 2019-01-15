@@ -47,7 +47,7 @@ class UrlsController < ApplicationController
       offset_basis = 0x811c9dc5
       prime = 16777619
       mask = 4294967295
-      table_size = 100000
+      table_size = 46655 # keeps urls down to 3 digits
 
       hash = offset_basis # Offset basis
       item.to_s.each_byte do |byte|
@@ -59,24 +59,5 @@ class UrlsController < ApplicationController
       hash = hash % table_size
 
       return hash
-    end
-
-    def check_bucket(url)
-      bucket = Url.find_by(id: url.hashed_num)
-      if !bucket
-        url.id = url.hashed_num
-      elsif bucket.text == url.text
-        redirect_to bucket
-      else
-        url.hashed_num += 1
-        store(url)
-      end
-
-      # check for collision
-      # if bucket is occupied and it is the url, return the url
-      # else if bucket is occupied and it is not the url, ++id and check for collision
-      # else create url in bucker
-
-      @url.id = @url.hashed_num
     end
 end

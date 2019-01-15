@@ -4,11 +4,11 @@ class UrlsController < ApplicationController
   end
 
   def show
-    @url = Url.find_by(short: params[:short])
+    @url = Url.find(params[:short].to_i(36))
   end
 
   def goto
-    @url = Url.find_by(short: params[:short])
+    @url = Url.find(params[:short].to_i(36))
     redirect_to @url.text
   end
 

@@ -33,7 +33,7 @@ class UrlsController < ApplicationController
     end
 
     @url.short = @url.id.to_s(36)
-    @url.save
+    @url.save unless !!Url.find_by(short: @url.short)
     redirect_to @url
   end
 

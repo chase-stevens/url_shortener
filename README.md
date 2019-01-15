@@ -1,24 +1,11 @@
-# README
+# URL Minitizer
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a Ruby on Rails web application that shortens URLs to a three digit alphanumeric string.
 
-Things you may want to cover:
+## Routes
+'/' - Input a URL to shorten
+'/:short' - Go to the url with the short string inputted
+'/urls' - View all URLs
+'/urls/:short' - View a specific URL
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+All views are also navigable by links as well.
